@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using DevTalk.Customers.Domain.Contracts;
 using DevTalk.Customers.Domain.Entities.Customer;
+using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -24,7 +25,7 @@ namespace DevTalk.Customers.Infrastructure.Queries
         {
             var sql = "SELECT * FROM Customers";
 
-            using(var connection = new SqliteConnection("Data Source=Customers.db;Cache=Shared"))
+            using(var connection = new SqlConnection("Data Source=reyes-devtalk.database.windows.net;Initial Catalog=Customers;Integrated Security=False;User Id=robertreyes22;Password=&JF760@2dTd&;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True"))
             {
                 var result = await connection.QueryAsync<Customer>(sql).ConfigureAwait(false);
                 return result.ToList();
@@ -35,7 +36,7 @@ namespace DevTalk.Customers.Infrastructure.Queries
         {
             var sql = "SELECT * FROM Customers WHERE CustomerId = @Id";
 
-            using (var connection = new SqliteConnection("Data Source=Customers.db;Cache=Shared"))
+            using (var connection = new SqlConnection("Data Source=reyes-devtalk.database.windows.net;Initial Catalog=Customers;Integrated Security=False;User Id=robertreyes22;Password=&JF760@2dTd&;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True"))
             {
                 return await connection.QuerySingleOrDefaultAsync<Customer>(sql, new { Id = id}).ConfigureAwait(false);
             }
