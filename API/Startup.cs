@@ -43,14 +43,11 @@ namespace DevTalk.Customers
             services.AddControllers();
 
             //DB
-            services.AddDbContext<CustomerDbContext>(options => options.UseSqlite(@"Data Source=Customers.db;Cache=Shared", x => x.MigrationsAssembly("DevTalk.Customers")));
+            services.AddDbContext<CustomerDbContext>(options => options.UseSqlServer(@"Data Source=reyes-devtalk.database.windows.net;Initial Catalog=Customers;Integrated Security=False;User Id=robertreyes22;Password=&JF760@2dTd&;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True", x => x.MigrationsAssembly("DevTalk.Customers")));
             services.AddScoped<IDbContext, CustomerDbContext>();
 
             //Dapper queries
             services.AddScoped<IQueries<Customer>, CustomerQueries>();
-            SqlMapper.AddTypeHandler(new SqliteGuidTypeHandler());
-            SqlMapper.RemoveTypeMap(typeof(Guid));
-            SqlMapper.RemoveTypeMap(typeof(Guid?));
 
             //MediatR
             services.AddMediatR(typeof(Startup));
