@@ -25,7 +25,7 @@ namespace DevTalk.Customers.Infrastructure.Queries
         {
             var sql = "SELECT * FROM Customers";
 
-            using(var connection = new SqlConnection("Data Source=reyes-devtalk.database.windows.net;Initial Catalog=Customers;Integrated Security=False;User Id=robertreyes22;Password=&JF760@2dTd&;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True"))
+            using(var connection = new SqlConnection(_configuration["CustomersConnectionString"]))
             {
                 var result = await connection.QueryAsync<Customer>(sql).ConfigureAwait(false);
                 return result.ToList();
@@ -36,7 +36,7 @@ namespace DevTalk.Customers.Infrastructure.Queries
         {
             var sql = "SELECT * FROM Customers WHERE CustomerId = @Id";
 
-            using (var connection = new SqlConnection("Data Source=reyes-devtalk.database.windows.net;Initial Catalog=Customers;Integrated Security=False;User Id=robertreyes22;Password=&JF760@2dTd&;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True"))
+            using (var connection = new SqlConnection(_configuration["CustomersConnectionString"]))
             {
                 return await connection.QuerySingleOrDefaultAsync<Customer>(sql, new { Id = id}).ConfigureAwait(false);
             }

@@ -43,7 +43,7 @@ namespace DevTalk.Customers
             services.AddControllers();
 
             //DB
-            services.AddDbContext<CustomerDbContext>(options => options.UseSqlServer(@"Data Source=reyes-devtalk.database.windows.net;Initial Catalog=Customers;Integrated Security=False;User Id=robertreyes22;Password=&JF760@2dTd&;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True", x => x.MigrationsAssembly("DevTalk.Customers")));
+            services.AddDbContext<CustomerDbContext>(options => options.UseSqlServer(Configuration["CustomersConnectionString"], x => x.MigrationsAssembly("DevTalk.Customers")));
             services.AddScoped<IDbContext, CustomerDbContext>();
 
             //Dapper queries

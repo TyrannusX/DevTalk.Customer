@@ -20,6 +20,12 @@ namespace DevTalk.Customers
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureAppConfiguration(config =>
+                    {
+                        var settings = config.Build();
+                        var connection = settings.GetConnectionString("AppConfig");
+                        config.AddAzureAppConfiguration(connection);
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }
